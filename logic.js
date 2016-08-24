@@ -1,15 +1,17 @@
 
-var allBtns = ['lions','tigers','bears'];
-var btnClass = ['primary', 'success','default','warning','link','danger','info'];
+var allBtns = ['ice cream','pizza','cake'];
+var btnClass = ['success', 'warning','danger','info','primary','default'];
 
 
 			
 
 function printBtns (){
-		
+	
+	$('#buttons').empty();
+
 	for (var j = 0; j < allBtns.length; j++){
 					
-		var newBtn = $('<button data-add="'+ allBtns[j] +'"class="btn btn-lg btn-'+ btnClass[j%7] +'">').text(allBtns[j]);
+		var newBtn = $('<button data-add="'+ allBtns[j] +'"class="food btn btn-lg btn-'+ btnClass[j%6] +'">').text(allBtns[j]);
 					
 		$('#buttons').append(newBtn);
 	}
@@ -20,39 +22,40 @@ $(document).ready(function(){
 	// print the buttons
 	printBtns();
 
+});
 
-	// get gifs when you click button
-	$('button').on('click', function(){
+$(document).on('click', '.food', function(){
 
-		var clickBtn = $(this).data('add');
-		var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + clickBtn + "&api_key=dc6zaTOxFJmzC&limit=10";
+	$("#gifs").empty();
 
-		console.log(clickBtn);
+	var clickBtn = $(this).data('add');
+	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + clickBtn + "&api_key=dc6zaTOxFJmzC&limit=10";
 
-		$.ajax({url: queryURL, method: 'GET'})
-	        .done(function(response) {
-	        	var daGifs = response.data;
+	console.log(clickBtn);
+
+	$.ajax({url: queryURL, method: 'GET'})
+	    .done(function(response) {
+	        var daGifs = response.data;
 				
-				for (var j = 0; j < daGifs.length; j++){
-					var movieDiv = $('<div>');
-	                var p = $('<p>').html(daGifs[j].rating);
+			for (var j = 0; j < daGifs.length; j++){
+				var foodDiv = $('<div>');
+	            var p = $('<p>').html(daGifs[j].rating);
+	            p.prepend('Rating: ');
 
-	                var movieGif = $('<img class="images">');
-	                movieGif.attr('src', daGifs[j].images.fixed_height_still.url);
-	                movieGif.attr('data-action', daGifs[j].images.fixed_height.url);
-	                movieGif.attr('data-still', daGifs[j].images.fixed_height_still.url);
-	                movieGif.attr('data-state','action');
+	            var foodGif = $('<img class="images">');
+	            foodGif.attr('src', daGifs[j].images.fixed_height_still.url);
+	            foodGif.attr('data-action', daGifs[j].images.fixed_height.url);
+	            foodGif.attr('data-still', daGifs[j].images.fixed_height_still.url);
+	            foodGif.attr('data-state','still');
 
-	                $(movieDiv).append(p);
-	                $(movieDiv).append(movieGif);
+	            
+	            $(foodDiv).append(foodGif);
+	            $(foodDiv).append(p);
 
-	                $('#gifs').prepend(movieDiv);
-				}
+	            $('#gifs').prepend(foodDiv);
+			}
 
-	         });
-
-	})
-
+	    });
 
 });
 
@@ -75,4 +78,29 @@ $(document).on('click', '.images', function(){
 
     }
 });
+
+// Add a button 
+
+$(document).on('click', '#submit', function(){
+
+	var input = $('#inputSuccess').val().trim();
+	console.log(input)
+
+	allBtns.push(input);
+	console.log(allBtns)
+
+	printBtns();
+
+	// return false;
+});
+
+
+
+
+
+
+
+
+
+
 
