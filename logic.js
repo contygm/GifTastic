@@ -29,7 +29,7 @@ $(document).on('click', '.food', function(){
 	$("#gifs").empty();
 
 	var clickBtn = $(this).data('add');
-	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + clickBtn + "&api_key=dc6zaTOxFJmzC&limit=10";
+	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + clickBtn + "&api_key=dc6zaTOxFJmzC&limit=10";
 
 	console.log(clickBtn);
 
