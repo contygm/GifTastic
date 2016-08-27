@@ -38,7 +38,7 @@ $(document).on('click', '.food', function(){
 	        var daGifs = response.data;
 				
 			for (var j = 0; j < daGifs.length; j++){
-				var foodDiv = $('<div>');
+				var foodDiv = $('<div class = "well">');
 	            var p = $('<p>').html(daGifs[j].rating);
 	            p.prepend('Rating: ');
 
